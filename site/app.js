@@ -40,7 +40,22 @@
     document.addEventListener('keydown',function(e){if(!lb.hidden&&(e.key==='Escape'||e.key==='Tab')){e.preventDefault();if(e.key==='Escape')closeLb();else lbClose.focus();}});
   }
 
-  // 3-step inquiry wizard
+  // Copy WeChat ID (buttons with data-copy-wechat; some are rendered later, so use delegation)
+  var WX_ID='Qwe137946a', WX_MSG={zh:['已复制','请长按复制：'],en:['Copied','Copy this ID: '],th:['คัดลอกแล้ว','คัดลอก ID นี้: ']}[pageLang.slice(0,2)]||['已复制','请长按复制：'];
+  document.addEventListener('click',function(e){
+    var btn=e.target.closest&&e.target.closest('[data-copy-wechat]');if(!btn)return;
+    var label=btn.querySelector('[data-wx-status]'), orig=label?label.getAttribute('data-orig')||label.textContent:'';
+    if(label&&!label.getAttribute('data-orig'))label.setAttribute('data-orig',orig);
+    function done(){if(label){label.textContent=WX_MSG[0];setTimeout(function(){label.textContent=orig;},2000);}}
+    function fallback(){window.prompt(WX_MSG[1],WX_ID);}
+    try{
+      if(!navigator.clipboard||!navigator.clipboard.writeText)throw new Error('Clipboard unavailable');
+      navigator.clipboard.writeText(WX_ID).then(done,fallback);
+    }catch(err){fallback();}
+  });
+
+  // 3-step inquiry wizard (only on pages that have the form)
+  if(!$('inquiry-form'))return;
   var form=$('inquiry-form'), panels=[$('inquiry-step-1'),$('inquiry-step-2'),$('inquiry-result')];
   var progress=[].slice.call(document.querySelectorAll('.wizard-progress li')), progressContainer=document.querySelector('.wizard-progress');
   var interest=$('interest'), locationField=$('location'), timing=$('timing'), question=$('purpose'), output=$('generated-text');

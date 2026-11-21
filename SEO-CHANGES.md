@@ -51,3 +51,26 @@ location ~* \.(css|js|woff2|png|jpg|jpeg|webp|ico|svg)$ {
 
 - **请懂泰语的同事通读一遍**，尤其是价格、法律免责声明和办理条件这几部分
 - 泰国客户会通过 WhatsApp 发来泰语消息，请确认有人能用泰语回复
+
+## Meta Pixel（Facebook / Instagram 广告追踪）
+
+代码已经装到全部 52 个页面（`site/assets/meta-pixel.js`），**还差像素 ID**。没填 ID 之前，这个脚本不会执行任何操作。
+
+**填写方法**：打开 `site/assets/meta-pixel.js`，把 `var PIXEL_ID = '';` 改成 `var PIXEL_ID = '你的像素ID';`，然后重新上传这个文件。也可以直接把 ID 发给 Claude 来改。
+
+| 事件 | 什么时候触发 | 在 Ads Manager 里怎么用 |
+|---|---|---|
+| PageView | 每次打开页面 | 再营销受众（看过网站的人） |
+| Contact | 点击 WhatsApp / Telegram / LINE / Messenger，或复制微信号 | 广告的转化目标 |
+| Lead | 填完询问表单后点击发送或复制 | 最强的购买意向信号，可以作为转化目标 |
+
+每个事件都带三个参数：`content_name`（联系渠道）、`content_category`（服务，如 retirement、dtv）、`language`（zh / en / th）。可以用这些参数建自定义转化，比如"泰语页面的养老签咨询"。
+
+**验证是否生效**：用 Chrome 安装 Meta Pixel Helper 插件，打开网站看事件有没有触发；或者在 Events Manager 里用「测试事件」功能。
+
+**隐私**：泰国 PDPA 对追踪类 Cookie 有告知要求，建议在隐私说明里加上一句"本网站使用 Meta Pixel 衡量广告效果"。
+
+### 顺手修好的问题
+
+- **复制微信号的按钮原来点了没反应**：每个页面都有这个按钮，但线上版本没有对应的代码。现在点击后会复制 `Qwe137946a`，并提示"已复制"，中、英、泰三种语言都支持。
+- **资讯文章页面原来有 JS 报错**：页面上没有询问表单，但脚本照样去初始化表单，结果出错。现在只在有表单的页面初始化。
