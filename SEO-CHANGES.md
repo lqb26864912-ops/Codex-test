@@ -56,9 +56,9 @@ location ~* \.(css|js|woff2|png|jpg|jpeg|webp|ico|svg)$ {
 
 ## Meta Pixel（Facebook / Instagram 广告追踪）
 
-代码已经装到全部 52 个页面（`site/assets/meta-pixel.js`），**还差像素 ID**。没填 ID 之前，这个脚本不会执行任何操作。
+代码已经装到全部 52 个页面（`site/assets/meta-pixel.js`），**像素 ID 已填：1442570674148916**（Magnificent Visa Website）。
 
-**填写方法**：打开 `site/assets/meta-pixel.js`，把 `var PIXEL_ID = '';` 改成 `var PIXEL_ID = '你的像素ID';`，然后重新上传这个文件。也可以直接把 ID 发给 Claude 来改。
+**如需更换像素**：打开 `site/assets/meta-pixel.js`，修改第 12 行的 `PIXEL_ID`，然后重新上传这个文件。
 
 | 事件 | 什么时候触发 | 在 Ads Manager 里怎么用 |
 |---|---|---|
