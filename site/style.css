@@ -513,3 +513,10 @@ body.fb-open{overflow:hidden}
   .header-tools{flex-shrink:0}
   .language-switch a{padding:4px 8px}
 }
+
+/* Thai pages: Thai-capable fonts, no negative tracking, taller lines for tone marks */
+html[lang="th"]{--font:"Inter","Noto Sans Thai","Sukhumvit Set","Thonburi","Leelawadee UI","Leelawadee","Tahoma",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+html[lang="th"] h1,html[lang="th"] h2,html[lang="th"] h3,html[lang="th"] .big-stat{letter-spacing:0}
+html[lang="th"] .hero h1,html[lang="th"] h1{line-height:1.3}
+html[lang="th"] h2{line-height:1.4}
+html[lang="th"] body{line-height:1.85}
