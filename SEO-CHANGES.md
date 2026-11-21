@@ -16,7 +16,9 @@
 
 ```nginx
 # 访问 /index.html 时 301 跳转到目录地址，避免重复页面
-location ~ ^(.*/)index\.html$ { return 301 $1; }
+# 注意：必须判断 $request_uri（用户实际请求的地址），不能用 location 匹配，
+# 否则会和 nginx 的 index 内部跳转冲突，造成无限重定向
+if ($request_uri ~ "^(.*/)index\.html(\?.*)?$") { return 301 $1$2; }
 
 # 静态资源长缓存（改了 CSS/JS 后记得在引用处加 ?v=版本号）
 location ~* \.(css|js|woff2|png|jpg|jpeg|webp|ico|svg)$ {
