@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="fonts/package/400.css">
+<link rel="stylesheet" href="fonts/package/700.css">
+<link rel="stylesheet" href="fonts/package/900.css">
+<style>
+  :root{--bg:#121212;--fg:#f5f5f5;--muted:rgba(255,255,255,.74);--dim:rgba(255,255,255,.58);--peach:#ffc49b;--peach2:#ffe6cf;--amber:#ff9d5c;--ease:cubic-bezier(.2,.7,.2,1)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:1080px;height:1920px;overflow:hidden;background:var(--bg);color:var(--fg);font-family:"Noto Sans SC",sans-serif}
+  .bg{position:absolute;inset:0;overflow:hidden}
+  .glowA{position:absolute;width:1100px;height:1100px;left:-320px;top:60px;border-radius:50%;background:radial-gradient(circle,rgba(255,157,92,.18),transparent 65%);animation:drift 22s linear both}
+  .glowB{position:absolute;width:900px;height:900px;right:-340px;top:1000px;border-radius:50%;background:radial-gradient(circle,rgba(219,230,255,.10),transparent 65%);animation:drift2 22s linear both}
+  @keyframes drift{to{transform:translate(160px,120px)}}
+  @keyframes drift2{to{transform:translate(-140px,-160px)}}
+  @keyframes up{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+  @keyframes fadein{from{opacity:0}to{opacity:1}}
+  @keyframes pop{0%{opacity:0;transform:scale(.7)}70%{opacity:1;transform:scale(1.06)}100%{opacity:1;transform:scale(1)}}
+  @keyframes pulse{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(255,196,155,.45)}50%{transform:scale(1.05);box-shadow:0 0 0 22px rgba(255,196,155,0)}}
+  @keyframes dot{0%,80%,100%{opacity:.25;transform:translateY(0)}40%{opacity:1;transform:translateY(-8px)}}
+
+  /* layout: content kept inside x 70–900 so the right-hand app buttons don't cover it */
+  .title{position:absolute;left:70px;width:830px;top:230px;font-size:76px;font-weight:900;line-height:1.2;animation:up .7s var(--ease) .1s both}
+  .title .glow{background:linear-gradient(180deg,#fff 0%,var(--peach2) 45%,var(--peach) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .head{position:absolute;left:70px;width:830px;top:440px;display:flex;align-items:center;gap:22px;padding:22px 28px;border-radius:28px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);animation:up .6s var(--ease) .35s both}
+  .head img{width:76px;height:76px;border-radius:18px}
+  .head .nm{font-size:38px;font-weight:900}
+  .head .st{font-size:28px;color:var(--dim);margin-top:2px}
+  .demo{margin-left:auto;padding:10px 22px;border-radius:999px;border:2px solid rgba(255,196,155,.8);color:var(--peach2);font-size:30px;font-weight:700;white-space:nowrap}
+  .window{position:absolute;left:70px;width:830px;top:600px;height:900px;overflow:hidden;mask-image:linear-gradient(180deg,transparent 0,#000 40px,#000 calc(100% - 30px),transparent 100%)}
+  #track{position:absolute;left:0;right:0;top:40px}
+  .row{display:flex;align-items:flex-end;gap:18px;margin-bottom:34px;opacity:0}
+  .row.a{flex-direction:row-reverse}
+  .av{flex:none;width:72px;height:72px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:34px;font-weight:900}
+  .row.c .av{background:#3a3a3a;color:#ddd}
+  .row.a .av{background:#fff;overflow:hidden;border-radius:18px}
+  .row.a .av img{width:72px;height:72px}
+  .bub{max-width:640px;padding:26px 32px;border-radius:30px;font-size:42px;line-height:1.5;font-weight:700}
+  .row.c .bub{background:#2b2b2b;border:1px solid rgba(255,255,255,.1);border-bottom-left-radius:8px}
+  .row.a .bub{background:linear-gradient(135deg,var(--peach2),var(--peach));color:#1b1b1b;border-bottom-right-radius:8px}
+  .typing{position:absolute;right:90px;opacity:0;display:flex;gap:12px;padding:26px 32px;border-radius:30px;background:rgba(255,196,155,.22);border-bottom-right-radius:8px}
+  .typing i{width:16px;height:16px;border-radius:50%;background:var(--peach2);animation:dot 1s infinite}
+  .typing i:nth-child(2){animation-delay:.15s}.typing i:nth-child(3){animation-delay:.3s}
+
+  /* end card */
+  .end{position:absolute;inset:0;background:#121212;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 160px 0 70px;text-align:center;animation:fadein .5s ease 17.6s both}
+  .end .big{font-size:96px;font-weight:900;line-height:1.2;animation:up .6s var(--ease) 17.8s both}
+  .end .big .glow{background:linear-gradient(180deg,#fff 0%,var(--peach2) 45%,var(--peach) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .end .pts{margin-top:44px;display:flex;flex-direction:column;gap:18px;font-size:44px;font-weight:700;color:var(--muted);animation:up .6s var(--ease) 18.3s both}
+  .end .logo{margin-top:64px;width:150px;height:150px;border-radius:34px;animation:pop .6s var(--ease) 18.9s both}
+  .end .cta{margin-top:40px;padding:28px 70px;border-radius:999px;background:#fff;color:#111;font-size:56px;font-weight:900;animation:up .6s var(--ease) 19.2s both, pulse 1.4s ease-in-out 19.8s infinite}
+  .end .disc{margin-top:36px;font-size:32px;color:var(--dim);animation:up .6s var(--ease) 19.5s both}
+</style>
+</head>
+<body>
+<div class="bg"><div class="glowA"></div><div class="glowB"></div></div>
+
+<div class="title">90 天报到<span class="glow">漏报了</span>，<br>怎么办？</div>
+<div class="head"><img src="logo.png" alt=""><div><div class="nm">方诺签证 · 签证顾问</div><div class="st">曼谷注册 · 中文咨询</div></div><div class="demo">情景演示</div></div>
+
+<div class="window"><div id="track"></div></div>
+
+<div class="end">
+  <div class="big">漏报了，<br><span class="glow">越早处理越好</span></div>
+  <div class="pts"><div>先看上次回执上的到期日</div><div>如实说明，按规定处理</div><div>别信“交钱疏通”</div></div>
+  <img class="logo" src="logo.png" alt="">
+  <div class="cta">有问题，私信我们</div>
+  <div class="disc">情景演示 · 以移民局为准 · 我们不保证结果</div>
+</div>
+
+<script>
+window.DURATION = 22;
+const MSGS = [
+  {s:'c', t:1.6,  text:'糟了，90 天报到好像过期几天了，怎么办？'},
+  {s:'a', t:3.8,  text:'先别慌，也别拖。先看一下上次回执上的到期日，我们帮您判断现在属于哪种情况。'},
+  {s:'c', t:7.4,  text:'能找人帮我代报吗？'},
+  {s:'a', t:9.2,  text:'逾期的情况，一般需要本人去移民局。我们可以帮您准备表格，说明要带什么。'},
+  {s:'c', t:12.6, text:'有人说交点钱就能“处理”？'},
+  {s:'a', t:14.4, text:'别信。泰国移民局公开提醒过，交钱“疏通”是骗局。如实说明情况、按规定处理，最稳妥。'},
+];
+const TYPING = 0.9;       // seconds the "typing…" bubble shows before an advisor reply
+const D = window.DURATION * 1000;
+const track = document.getElementById('track');
+for (const m of MSGS) {
+  const row = document.createElement('div'); row.className = 'row ' + m.s;
+  row.innerHTML = m.s === 'a' ? '<div class="av"><img src="logo.png"></div><div class="bub"></div>' : '<div class="av">客</div><div class="bub"></div>';
+  row.querySelector('.bub').textContent = m.text;
+  track.appendChild(row); m.el = row;
+  if (m.s === 'a') { const ty = document.createElement('div'); ty.className = 'typing'; ty.innerHTML = '<i></i><i></i><i></i>'; track.appendChild(ty); m.ty = ty; }
+}
+window.build = () => {
+  const H = document.querySelector('.window').clientHeight - 80;   // usable height
+  let scroll = 0; const kf = [{transform: 'translateY(0px)', offset: 0}];
+  const addScroll = (t, bottom) => {
+    const target = Math.max(scroll, bottom - H);
+    if (target > scroll) {
+      kf.push({transform: `translateY(${-scroll}px)`, offset: Math.max(0, (t - 0.05) * 1000 / D)});
+      kf.push({transform: `translateY(${-target}px)`, offset: Math.min(1, (t + 0.35) * 1000 / D)});
+      scroll = target;
+    }
+  };
+  for (const m of MSGS) {
+    const top = m.el.offsetTop, bottom = top + m.el.offsetHeight;
+    if (m.ty) {
+      m.ty.style.top = top + 'px';
+      const t0 = m.t - TYPING;
+      addScroll(t0, top + 110);
+      m.ty.animate([{opacity: 0}, {opacity: 1, offset: 0.15}, {opacity: 1, offset: 0.85}, {opacity: 0}], {delay: t0 * 1000, duration: TYPING * 1000, fill: 'both'});
+    }
+    addScroll(m.t, bottom);
+    m.el.animate([{opacity: 0, transform: 'translateY(24px)'}, {opacity: 1, transform: 'none'}], {delay: m.t * 1000, duration: 380, easing: 'cubic-bezier(.2,.7,.2,1)', fill: 'both'});
+  }
+  kf.push({transform: `translateY(${-scroll}px)`, offset: 1});
+  track.animate(kf, {duration: D, fill: 'both'});
+};
+</script>
+</body>
+</html>

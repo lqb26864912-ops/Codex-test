@@ -1,6 +1,8 @@
 # 短视频模板（15 秒 Reels）
 
-现有：`elite.html`（精英签）、`retire.html`（养老签两条通道）。
+现有：`elite.html`（精英签）、`retire.html`（养老签两条通道）、`tm47chat.html`（90 天报到漏报，聊天气泡情景对话，22 秒）。
+
+页面可以用 `window.DURATION` 设定时长；需要按实际排版计算动画的（比如聊天自动滚动），在 `window.build()` 里创建，渲染脚本会在字体加载完以后调用它。
 
 用 HTML 动画逐帧截图，再用 ffmpeg 合成 MP4。竖版 1080×1920，30 帧，15 秒。
 
@@ -34,3 +36,10 @@ ffmpeg -y -framerate 30 -i frames-elite/%04d.png -f lavfi -i anullsrc=channel_la
 node render.js preview 新文件.html 2,6,10,14   # 第三个参数是要预览的时间点（秒）
 node render.js full 新文件.html
 ```
+
+## 聊天气泡模板（tm47chat.html）
+
+- 对话内容在页面底部的 `MSGS` 里：`s` 是说话的人（`c` 客户、`a` 顾问），`t` 是出现的秒数
+- 顾问回复前会自动显示约 0.9 秒的"正在输入"
+- 内容排在屏幕 x 70–900 之间，避开抖音右侧按钮和底部文字区
+- 顶部固定显示"情景演示"，不要去掉：编写的对话不能做成像真实聊天记录的样子

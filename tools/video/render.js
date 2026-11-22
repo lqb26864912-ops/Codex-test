@@ -4,7 +4,7 @@ const {chromium} = require('playwright');
 const path = require('path');
 const fs = require('fs');
 const DIR = __dirname;
-const FPS = 30, DUR = 15;
+const FPS = 30;
 (async () => {
   const mode = process.argv[2] || 'preview';
   const page = process.argv[3] || 'elite.html';
@@ -18,6 +18,9 @@ const FPS = 30, DUR = 15;
   for (const t of keys) { await setT(t); await p.waitForTimeout(150); }
   await p.evaluate(() => document.fonts.ready);
   await p.waitForTimeout(800);
+  // pages that need measured layout (e.g. chat scrolling) build their animations after fonts are ready
+  await p.evaluate(() => { if (window.build) window.build(); });
+  const DUR = await p.evaluate(() => window.DURATION || 15);
   const ok = await p.evaluate(() => document.fonts.check('700 60px "Noto Sans SC"', document.body.innerText.replace(/\s+/g, '')));
   console.log('fonts loaded for all page text:', ok);
   if (mode === 'preview') {
@@ -28,7 +31,7 @@ const FPS = 30, DUR = 15;
       await setT(i / FPS);
       await p.screenshot({path: path.join(out, String(i).padStart(4, '0') + '.png')});
     }
-    console.log('frames:', FPS * DUR);
+    console.log('frames:', FPS * DUR, 'duration:', DUR);
   }
   await b.close();
 })();
