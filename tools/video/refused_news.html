@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="fonts/package/400.css">
+<link rel="stylesheet" href="fonts/package/700.css">
+<link rel="stylesheet" href="fonts/package/900.css">
+<style>
+  :root{--bg:#121212;--fg:#f5f5f5;--muted:rgba(255,255,255,.76);--dim:rgba(255,255,255,.58);--peach:#ffc49b;--peach2:#ffe6cf;--red:#ff7a6b;--ease:cubic-bezier(.2,.7,.2,1)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:1080px;height:1920px;overflow:hidden;background:var(--bg);color:var(--fg);font-family:"Noto Sans SC",sans-serif}
+  .bg{position:absolute;inset:0;overflow:hidden}
+  .grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:90px 90px;mask-image:radial-gradient(circle at 50% 45%,#000 0%,transparent 70%)}
+  .glowA{position:absolute;width:1100px;height:1100px;left:-300px;top:120px;border-radius:50%;background:radial-gradient(circle,rgba(255,122,107,.16),transparent 65%);animation:drift 33s linear both}
+  .glowB{position:absolute;width:900px;height:900px;right:-320px;top:900px;border-radius:50%;background:radial-gradient(circle,rgba(255,196,155,.12),transparent 65%);animation:drift2 33s linear both}
+  @keyframes drift{to{transform:translate(160px,120px)}}
+  @keyframes drift2{to{transform:translate(-140px,-160px)}}
+
+  /* content inside x 70–900 (right-hand app buttons) and y 220–1560 (caption area) */
+  .scene{position:absolute;left:70px;width:830px;top:220px;height:1340px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
+  .glow{background:linear-gradient(180deg,#fff 0%,var(--peach2) 45%,var(--peach) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .red{color:var(--red)}
+  .in{animation:up .6s var(--ease) both}
+  @keyframes up{from{opacity:0;transform:translateY(42px)}to{opacity:1;transform:none}}
+  @keyframes out{from{opacity:1}to{opacity:0;transform:translateY(-36px)}}
+  @keyframes pop{0%{opacity:0;transform:scale(.7)}70%{opacity:1;transform:scale(1.06)}100%{opacity:1;transform:scale(1)}}
+  @keyframes pulse{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(255,196,155,.45)}50%{transform:scale(1.05);box-shadow:0 0 0 22px rgba(255,196,155,0)}}
+
+  /* step counter at the top of each news scene */
+  .step{font-size:34px;font-weight:900;color:var(--peach);letter-spacing:2px;margin-bottom:26px}
+
+  /* news card */
+  .news{width:830px;border-radius:32px;background:#1d1d1d;border:1px solid rgba(255,255,255,.14);overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.45)}
+  .news .top{display:flex;align-items:center;gap:16px;padding:22px 32px;background:rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.1)}
+  .news .tag{padding:6px 16px;border-radius:10px;background:var(--red);color:#fff;font-size:28px;font-weight:900}
+  .news .src{font-size:30px;font-weight:700;color:var(--muted)}
+  .news .date{margin-left:auto;font-size:28px;color:var(--dim);white-space:nowrap}
+  .news .body{padding:34px 36px 38px}
+  .news .hl{font-size:56px;font-weight:900;line-height:1.3}
+  .news .q{margin-top:24px;padding-left:24px;border-left:6px solid var(--peach);font-size:38px;font-weight:700;line-height:1.5;color:var(--muted)}
+  .take{margin-top:40px;font-size:46px;font-weight:900;line-height:1.4}
+  .take b{color:var(--peach)}
+  .small{margin-top:22px;font-size:30px;color:var(--dim);line-height:1.5}
+
+  /* scene 1: 0 – 3.6 hook */
+  #s1{animation:out .35s 3.25s both}
+  #s1 .h{font-size:100px;font-weight:900;line-height:1.22}
+  #s1 .date{font-size:52px;font-weight:900;color:var(--peach);margin-bottom:24px}
+  #s1 .sub{margin-top:50px;font-size:60px;font-weight:900;padding:16px 34px;border-radius:22px;background:#fff;color:#111}
+
+  /* scene 2: 3.6 – 9.2 */
+  #s2{animation:out .35s 8.85s both}
+  /* scene 3: 9.2 – 14.6 */
+  #s3{animation:out .35s 14.25s both}
+  .nums{display:flex;gap:22px;margin-top:8px}
+  .nums>div{flex:1;padding:22px 24px;border-radius:22px;background:rgba(255,255,255,.05)}
+  .nums .l{font-size:28px;color:var(--dim);font-weight:700}
+  .nums .v{font-size:62px;font-weight:900;line-height:1.15}
+  /* scene 4: 14.6 – 20.2 */
+  #s4{animation:out .35s 19.85s both}
+  .list{margin-top:22px;display:flex;flex-direction:column;gap:14px}
+  .list div{font-size:42px;font-weight:900;padding:14px 24px;border-radius:18px;background:rgba(255,196,155,.12)}
+  /* scene 5: 20.2 – 25.8 */
+  #s5{animation:out .35s 25.45s both}
+  /* scene 6: 25.8 – 29.6 */
+  #s6{animation:out .35s 29.25s both}
+
+  /* scene 7: 29.6 – 33 end card */
+  #s7{align-items:center;text-align:center}
+  .logo{width:180px;height:180px;border-radius:40px;box-shadow:0 20px 60px rgba(0,0,0,.5);animation:pop .7s var(--ease) both}
+  .end-h{margin-top:40px;font-size:74px;font-weight:900;line-height:1.25}
+  .end-tag{margin-top:20px;font-size:44px;font-weight:700;color:var(--peach)}
+  .cta{margin-top:50px;display:inline-block;padding:28px 70px;border-radius:999px;background:#fff;color:#111;font-size:58px;font-weight:900;animation:up .6s var(--ease) both, pulse 1.4s ease-in-out 31.2s infinite}
+  .disc{margin-top:36px;font-size:28px;color:var(--dim);line-height:1.6}
+</style>
+</head>
+<body>
+<div class="bg"><div class="grid"></div><div class="glowA"></div><div class="glowB"></div></div>
+
+<section class="scene" id="s1">
+  <div class="date in" style="animation-delay:.1s">11 月 12 日 · 曼谷素万那普机场</div>
+  <div class="h in" style="animation-delay:.35s">一天 <span class="red">45 名</span></div>
+  <div class="h in" style="animation-delay:.6s">中国旅客<span class="glow">被拒入境</span></div>
+  <div class="sub in" style="animation-delay:1.4s">到底卡在哪？看新闻</div>
+</section>
+
+<section class="scene" id="s2">
+  <div class="step in" style="animation-delay:3.7s">新闻 ①</div>
+  <div class="news in" style="animation-delay:3.85s">
+    <div class="top"><span class="tag">新闻</span><span class="src">泰国移民局通报 · 曼谷邮报等</span><span class="date">2026-11</span></div>
+    <div class="body">
+      <div class="hl">素万那普机场 92 名旅客被拒入境，其中 <span class="red">45 名</span>是中国籍</div>
+      <div class="q">官方说法：这些旅客自称来旅游，但<b class="glow">拿不出可核实的行程安排</b></div>
+    </div>
+  </div>
+</section>
+
+<section class="scene" id="s3">
+  <div class="step in" style="animation-delay:9.3s">新闻 ②</div>
+  <div class="news in" style="animation-delay:9.45s">
+    <div class="top"><span class="tag">数据</span><span class="src">泰国移民局统计</span><span class="date">截至 11-14</span></div>
+    <div class="body">
+      <div class="hl">今年中国旅客 <span class="red">12,880 人</span>被拒入境</div>
+      <div class="nums" style="margin-top:26px">
+        <div><div class="l">同期入境</div><div class="v">487.9 万</div></div>
+        <div><div class="l">被拒比例</div><div class="v" style="color:var(--peach)">0.26%</div></div>
+      </div>
+      <div class="q">移民局：查验标准对所有国籍一样，不针对中国游客</div>
+    </div>
+  </div>
+</section>
+
+<section class="scene" id="s4">
+  <div class="step in" style="animation-delay:14.7s">新闻 ③</div>
+  <div class="news in" style="animation-delay:14.85s">
+    <div class="top"><span class="tag">提醒</span><span class="src">中国驻泰国大使馆</span><span class="date">2026-06-09</span></div>
+    <div class="body">
+      <div class="hl">免签不等于<span class="glow">“无条件入境”</span></div>
+      <div class="q" style="margin-top:20px">被拒常见原因：拿不出——</div>
+      <div class="list">
+        <div class="in" style="animation-delay:16.1s">✈ 返程或去第三国的机票</div>
+        <div class="in" style="animation-delay:16.7s">🏨 酒店或住宿证明</div>
+        <div class="in" style="animation-delay:17.3s">💰 足额资金证明</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="scene" id="s5">
+  <div class="step in" style="animation-delay:20.3s">新闻 ④</div>
+  <div class="news in" style="animation-delay:20.45s">
+    <div class="top"><span class="tag">政策</span><span class="src">中国驻泰国大使馆</span><span class="date">2026-09-02</span></div>
+    <div class="body">
+      <div class="hl">9 月 15 日起，泰国取消 93 国 60 天单方面免签</div>
+      <div class="q">中泰互免协定继续有效：<br>单次停留 ≤ 30 天，每 180 天累计 ≤ 90 天</div>
+    </div>
+  </div>
+  <div class="take in" style="animation-delay:22.6s">要待<b>超过 30 天</b>，或来工作、学习——<br><b>入境前就要办好签证</b></div>
+</section>
+
+<section class="scene" id="s6">
+  <div class="step in" style="animation-delay:25.9s">新闻 ⑤</div>
+  <div class="news in" style="animation-delay:26.05s">
+    <div class="top"><span class="tag">辟谣</span><span class="src">泰国移民局回应</span><span class="date">2026-11</span></div>
+    <div class="body">
+      <div class="hl">网传中介开价 1.8 万“包过关”？</div>
+      <div class="q">移民局：目前没有收到具体证据，已下令调查</div>
+    </div>
+  </div>
+  <div class="take in" style="animation-delay:27.4s">没有人能<span class="red">“保证入境”</span><br>材料准备齐全，才最稳妥</div>
+</section>
+
+<section class="scene" id="s7">
+  <img class="logo" src="logo.png" style="animation-delay:29.7s" alt="">
+  <div class="end-h in" style="animation-delay:30.0s">要在泰国住超过 30 天？<br><span class="glow">先办对签证</span></div>
+  <div class="end-tag in" style="animation-delay:30.3s">曼谷注册 · 中文咨询</div>
+  <div class="cta" style="animation-delay:30.6s, 31.2s">有问题，私信我们</div>
+  <div class="disc in" style="animation-delay:30.9s">来源：泰国移民局通报及媒体报道<br>中国驻泰国大使馆领事提醒 · 以官方最新规定为准</div>
+</section>
+<script>window.DURATION = 33;</script>
+</body>
+</html>
