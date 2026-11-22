@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="fonts/package/400.css">
+<link rel="stylesheet" href="fonts/package/700.css">
+<link rel="stylesheet" href="fonts/package/900.css">
+<style>
+  :root{--bg:#121212;--fg:#f5f5f5;--muted:rgba(255,255,255,.76);--dim:rgba(255,255,255,.58);--peach:#ffc49b;--peach2:#ffe6cf;--red:#ff7a6b;--ease:cubic-bezier(.2,.7,.2,1)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:1080px;height:1920px;overflow:hidden;background:var(--bg);color:var(--fg);font-family:"Noto Sans SC",sans-serif}
+  .bg{position:absolute;inset:0;overflow:hidden}
+  .grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:90px 90px;mask-image:radial-gradient(circle at 50% 45%,#000 0%,transparent 70%)}
+  .glowA{position:absolute;width:1100px;height:1100px;left:-300px;top:120px;border-radius:50%;background:radial-gradient(circle,rgba(255,122,107,.16),transparent 65%);animation:drift 27s linear both}
+  .glowB{position:absolute;width:900px;height:900px;right:-320px;top:900px;border-radius:50%;background:radial-gradient(circle,rgba(255,196,155,.12),transparent 65%);animation:drift2 27s linear both}
+  @keyframes drift{to{transform:translate(160px,120px)}}
+  @keyframes drift2{to{transform:translate(-140px,-160px)}}
+
+  /* content inside x 70–900 (right-hand app buttons) and y 220–1560 (caption area) */
+  .scene{position:absolute;left:70px;width:830px;top:220px;height:1340px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
+  .glow{background:linear-gradient(180deg,#fff 0%,var(--peach2) 45%,var(--peach) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .red{color:var(--red)}
+  .in{animation:up .6s var(--ease) both}
+  @keyframes up{from{opacity:0;transform:translateY(42px)}to{opacity:1;transform:none}}
+  @keyframes out{from{opacity:1}to{opacity:0;transform:translateY(-36px)}}
+  @keyframes pop{0%{opacity:0;transform:scale(.7)}70%{opacity:1;transform:scale(1.06)}100%{opacity:1;transform:scale(1)}}
+  @keyframes pulse{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(255,196,155,.45)}50%{transform:scale(1.05);box-shadow:0 0 0 22px rgba(255,196,155,0)}}
+
+  /* step counter at the top of each news scene */
+  .step{font-size:34px;font-weight:900;color:var(--peach);letter-spacing:2px;margin-bottom:26px}
+
+  /* news card */
+  .news{width:830px;border-radius:32px;background:#1d1d1d;border:1px solid rgba(255,255,255,.14);overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.45)}
+  .news .top{display:flex;align-items:center;gap:16px;padding:22px 32px;background:rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.1)}
+  .news .tag{padding:6px 16px;border-radius:10px;background:var(--red);color:#fff;font-size:28px;font-weight:900}
+  .news .src{font-size:30px;font-weight:700;color:var(--muted)}
+  .news .date{margin-left:auto;font-size:28px;color:var(--dim);white-space:nowrap}
+  .news .body{padding:34px 36px 38px}
+  .news .hl{font-size:56px;font-weight:900;line-height:1.3}
+  .news .q{margin-top:24px;padding-left:24px;border-left:6px solid var(--peach);font-size:38px;font-weight:700;line-height:1.5;color:var(--muted)}
+  .take{margin-top:40px;font-size:46px;font-weight:900;line-height:1.4}
+  .take b{color:var(--peach)}
+  .small{margin-top:22px;font-size:30px;color:var(--dim);line-height:1.5}
+
+  /* scene 1: 0 – 3.6 hook */
+  #s1{animation:out .35s 3.05s both}
+  #s1 .h{font-size:100px;font-weight:900;line-height:1.22}
+  #s1 .date{font-size:52px;font-weight:900;color:var(--peach);margin-bottom:24px}
+  #s1 .sub{margin-top:50px;font-size:60px;font-weight:900;padding:16px 34px;border-radius:22px;background:#fff;color:#111}
+
+  #s2{animation:out .35s 9.05s both}
+  #s3{animation:out .35s 14.25s both}
+  #s4{animation:out .35s 20.65s both}
+  #s5{animation:out .35s 23.65s both}
+  .flow{margin-top:26px;display:flex;flex-direction:column;gap:12px}
+  .flow div{font-size:40px;font-weight:900;padding:16px 24px;border-radius:18px;background:rgba(255,196,155,.12)}
+  .flow .arr{background:none;padding:0 0 0 30px;font-size:34px;color:var(--peach)}
+  .nums{display:flex;gap:22px;margin-top:26px}
+  .nums>div{flex:1;padding:22px 24px;border-radius:22px;background:rgba(255,255,255,.05)}
+  .nums .l{font-size:28px;color:var(--dim);font-weight:700}
+  .nums .v{font-size:58px;font-weight:900;line-height:1.15}
+  .h2{font-size:80px;font-weight:900;line-height:1.2;margin-bottom:36px}
+  .tips{width:830px;display:flex;flex-direction:column;gap:22px}
+  .tip{display:flex;gap:26px;align-items:center;padding:28px 32px;border-radius:28px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15)}
+  .tip .n{flex:none;width:84px;height:84px;border-radius:22px;background:linear-gradient(135deg,var(--peach2),var(--peach));color:#1b1b1b;display:flex;align-items:center;justify-content:center;font-size:50px;font-weight:900}
+  .tip .t{font-size:48px;font-weight:900;line-height:1.3}
+  .big{font-size:84px;font-weight:900;line-height:1.3}
+  .pills{margin-top:44px;display:flex;flex-wrap:wrap;gap:20px}
+  .pills span{padding:16px 32px;border-radius:999px;border:2px solid rgba(255,196,155,.7);font-size:46px;font-weight:900;color:var(--peach2)}
+  /* end card */
+  #s7{align-items:center;text-align:center}
+  .logo{width:180px;height:180px;border-radius:40px;box-shadow:0 20px 60px rgba(0,0,0,.5);animation:pop .7s var(--ease) both}
+  .end-h{margin-top:40px;font-size:74px;font-weight:900;line-height:1.25}
+  .end-tag{margin-top:20px;font-size:44px;font-weight:700;color:var(--peach)}
+  .cta{margin-top:50px;display:inline-block;padding:28px 70px;border-radius:999px;background:#fff;color:#111;font-size:58px;font-weight:900;animation:up .6s var(--ease) both, pulse 1.4s ease-in-out 25.6s infinite}
+  .disc{margin-top:36px;font-size:28px;color:var(--dim);line-height:1.6}
+</style>
+</head>
+<body>
+<div class="bg"><div class="grid"></div><div class="glowA"></div><div class="glowB"></div></div>
+
+<section class="scene" id="s1">
+  <div class="date in" style="animation-delay:.1s">11 月 20 日 · 泰国网警通报</div>
+  <div class="h in" style="animation-delay:.35s">清迈宁曼路</div>
+  <div class="h in" style="animation-delay:.6s"><span class="red">换汇店</span>被查</div>
+  <div class="sub in" style="animation-delay:1.3s">涉嫌帮诈骗集团洗钱</div>
+</section>
+
+<section class="scene" id="s2">
+  <div class="step in" style="animation-delay:3.5s">新闻 ①</div>
+  <div class="news in" style="animation-delay:3.65s">
+    <div class="top"><span class="tag">新闻</span><span class="src">泰国网警通报 · 泰叻报等</span><span class="date">2026-11-20</span></div>
+    <div class="body">
+      <div class="hl">以换汇店做掩护，用 <span class="red" style="white-space:nowrap">24 个人头账户</span>接收诈骗受害人的钱</div>
+      <div class="flow">
+        <div class="in" style="animation-delay:5.2s">受害人资金 约 940 万泰铢</div>
+        <div class="arr in" style="animation-delay:5.8s">↓ 换成加密货币</div>
+        <div class="in" style="animation-delay:6.2s">USDT</div>
+        <div class="arr in" style="animation-delay:6.8s">↓ 转出</div>
+        <div class="in" style="animation-delay:7.2s">中国籍“老板”</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="scene" id="s3">
+  <div class="step in" style="animation-delay:9.5s">新闻 ②</div>
+  <div class="news in" style="animation-delay:9.65s">
+    <div class="top"><span class="tag">数据</span><span class="src">泰国网警通报</span><span class="date">2026-11-20</span></div>
+    <div class="body">
+      <div class="hl">主要嫌疑人：42 岁中国籍男子</div>
+      <div class="nums">
+        <div><div class="l">个人数字钱包流水</div><div class="v">约 275 万 USDT</div></div>
+        <div><div class="l">折合</div><div class="v" style="color:var(--peach)">逾 9200 万泰铢</div></div>
+      </div>
+      <div class="q">注意：这是钱包流水，不等于洗钱金额<br>已抓获 1 名中国籍女子并羁押<br>案件尚未判决</div>
+    </div>
+  </div>
+</section>
+
+<section class="scene" id="s4">
+  <div class="h2 in" style="animation-delay:14.7s">在泰国，<span class="glow">这 3 件事</span><br>千万别做错</div>
+  <div class="tips">
+    <div class="tip in" style="animation-delay:15.6s"><div class="n">1</div><div class="t">换汇走银行<br>或持牌换汇点</div></div>
+    <div class="tip in" style="animation-delay:17.0s"><div class="n">2</div><div class="t">银行卡、账户<br><span class="red">不出租、不出借</span></div></div>
+    <div class="tip in" style="animation-delay:18.4s"><div class="n">3</div><div class="t">来历不明的钱<br><span class="red">不帮人转</span></div></div>
+  </div>
+</section>
+
+<section class="scene" id="s5">
+  <div class="big in" style="animation-delay:20.9s">在泰国长住，</div>
+  <div class="big in" style="animation-delay:21.2s"><span class="glow">每一步都要合规</span></div>
+  <div class="pills">
+    <span class="in" style="animation-delay:21.8s">签证</span>
+    <span class="in" style="animation-delay:22.1s">银行开户</span>
+    <span class="in" style="animation-delay:22.4s">资金证明</span>
+  </div>
+</section>
+
+<section class="scene" id="s7">
+  <img class="logo" src="logo.png" style="animation-delay:24.0s" alt="">
+  <div class="end-h in" style="animation-delay:24.3s">在泰国的事，<br><span class="glow">先问清楚再做</span></div>
+  <div class="end-tag in" style="animation-delay:24.6s">曼谷注册 · 中文咨询</div>
+  <div class="cta" style="animation-delay:24.9s, 25.6s">有问题，私信我们</div>
+  <div class="disc in" style="animation-delay:25.2s">来源：泰国网警通报；泰叻报、Thai Tabloid 等报道<br>案件以司法机关最终认定为准</div>
+</section>
+<script>window.DURATION = 27;</script>
+</body>
+</html>
