@@ -1,0 +1,23 @@
+<!doctype html><html><head><meta charset="utf-8">
+<link rel="stylesheet" href="fonts/package/700.css"><link rel="stylesheet" href="fonts/package/900.css">
+<style>*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1440px;overflow:hidden;font-family:"Noto Sans SC",sans-serif}
+.c{position:absolute;inset:0;padding:110px 90px;display:flex;flex-direction:column}
+.light{background:#fbf6ef;color:#16130f}.dark{background:#141210;color:#fff}
+.tag{align-self:flex-start;font-size:40px;font-weight:900;padding:12px 30px;border-radius:999px;background:#d2402f;color:#fff}
+.h1{margin-top:70px;font-size:150px;font-weight:900;line-height:1.12;letter-spacing:-2px}
+.h2{margin-top:30px;font-size:150px;font-weight:900;line-height:1.12;color:#d2402f}
+.dark .h2{color:#ffb48a}
+.sub{margin-top:auto;display:flex;flex-direction:column;gap:22px}
+.sub div{font-size:52px;font-weight:700;display:flex;gap:20px;align-items:center}
+.sub i{font-style:normal;width:56px;height:56px;border-radius:14px;background:#16130f;color:#fbf6ef;display:flex;align-items:center;justify-content:center;font-size:34px}
+.dark .sub i{background:#ffb48a;color:#141210}
+.foot{margin-top:70px;display:flex;align-items:center;gap:18px;font-size:36px;font-weight:700;opacity:.75}
+.foot img{width:64px;height:64px;border-radius:16px}
+</style></head><body>
+<div class="c" id="v"><div class="tag">在泰国必看</div>
+<div class="h1">泰国<br>90天报到</div><div class="h2">≠ 续签</div>
+<div class="sub"><div><i>1</i>什么时候报</div><div><i>2</i>漏报了怎么办</div><div><i>3</i>和续签差在哪</div></div>
+<div class="foot"><img src="logo.png">方诺签证 · 曼谷</div></div>
+<script>document.getElementById('v').className='c '+(location.hash.slice(1)||'light')</script>
+</body></html>
