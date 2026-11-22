@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="fonts/package/400.css">
+<link rel="stylesheet" href="fonts/package/700.css">
+<link rel="stylesheet" href="fonts/package/900.css">
+<style>
+  :root{--bg:#121212;--fg:#f5f5f5;--muted:rgba(255,255,255,.74);--dim:rgba(255,255,255,.58);--peach:#ffc49b;--peach2:#ffe6cf;--amber:#ff9d5c;--red:#ff7a6b;--ease:cubic-bezier(.2,.7,.2,1)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:1080px;height:1920px;overflow:hidden;background:var(--bg);color:var(--fg);font-family:"Noto Sans SC",sans-serif}
+  .bg{position:absolute;inset:0;overflow:hidden}
+  .grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:90px 90px;mask-image:radial-gradient(circle at 50% 45%,#000 0%,transparent 70%)}
+  .glowA{position:absolute;width:1100px;height:1100px;left:-300px;top:120px;border-radius:50%;background:radial-gradient(circle,rgba(255,122,107,.18),transparent 65%);animation:drift 20s linear both}
+  .glowB{position:absolute;width:900px;height:900px;right:-320px;top:900px;border-radius:50%;background:radial-gradient(circle,rgba(255,196,155,.12),transparent 65%);animation:drift2 20s linear both}
+  @keyframes drift{to{transform:translate(160px,120px)}}
+  @keyframes drift2{to{transform:translate(-140px,-160px)}}
+
+  /* content kept inside x 70–900 (right-hand app buttons) and y 220–1560 (caption area) */
+  .scene{position:absolute;left:70px;width:830px;top:220px;height:1340px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
+  .glow{background:linear-gradient(180deg,#fff 0%,var(--peach2) 45%,var(--peach) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .in{animation:up .7s var(--ease) both}
+  @keyframes up{from{opacity:0;transform:translateY(46px)}to{opacity:1;transform:none}}
+  @keyframes out{from{opacity:1}to{opacity:0;transform:translateY(-36px)}}
+  @keyframes pop{0%{opacity:0;transform:scale(.7)}70%{opacity:1;transform:scale(1.06)}100%{opacity:1;transform:scale(1)}}
+  @keyframes pulse{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(255,196,155,.45)}50%{transform:scale(1.05);box-shadow:0 0 0 22px rgba(255,196,155,0)}}
+  @keyframes strike{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+  .badge{display:inline-flex;align-items:center;gap:16px;padding:12px 28px;border:2px solid rgba(255,196,155,.7);border-radius:999px;font-size:32px;font-weight:700;color:var(--peach2)}
+  .dot{width:14px;height:14px;border-radius:50%;background:var(--red);box-shadow:0 0 16px var(--red)}
+
+  /* scene 1: 0 – 3.4 s  hook */
+  #s1{animation:out .35s 3.05s both}
+  #s1 .h{font-size:104px;font-weight:900;line-height:1.2}
+  #s1 .h .red{color:var(--red)}
+  #s1 .sub{margin-top:50px;font-size:64px;font-weight:900;padding:18px 34px;border-radius:22px;background:#fff;color:#111}
+
+  /* scene 2: 3.4 – 7.6 s  the number */
+  #s2{animation:out .35s 7.25s both}
+  #s2 .lab{margin-top:44px;font-size:46px;font-weight:700;color:var(--muted)}
+  #s2 .num{font-size:220px;font-weight:900;line-height:1.05;letter-spacing:-4px}
+  #s2 .num small{font-size:90px;letter-spacing:0;margin-left:10px}
+  #s2 .ratio{margin-top:40px;font-size:52px;font-weight:700}
+  #s2 .ratio b{color:var(--peach)}
+  .note{margin-top:34px;font-size:32px;color:var(--dim);line-height:1.5}
+
+  /* scene 3: 7.6 – 14.0 s  three points */
+  #s3{animation:out .35s 13.65s both}
+  #s3 .h{font-size:84px;font-weight:900;line-height:1.2}
+  .cards{margin-top:50px;display:flex;flex-direction:column;gap:26px;width:830px}
+  .card{display:flex;gap:30px;align-items:center;padding:30px 36px;border-radius:30px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16)}
+  .card .n{flex:none;width:92px;height:92px;border-radius:24px;background:linear-gradient(135deg,var(--peach2),var(--peach));color:#1b1b1b;display:flex;align-items:center;justify-content:center;font-size:56px;font-weight:900}
+  .card .t{font-size:58px;font-weight:900}
+  .card .d{margin-top:4px;font-size:36px;font-weight:700;color:var(--muted)}
+
+  /* scene 4: 14.0 – 17.4 s  key message */
+  #s4{animation:out .35s 17.05s both}
+  .neq{font-size:128px;font-weight:900;line-height:1.2}
+  .neq .x{position:relative;display:inline-block;color:var(--red)}
+  #s4 .tip{margin-top:60px;padding:30px 38px;border-radius:28px;background:rgba(255,196,155,.12);border:2px solid rgba(255,196,155,.5);font-size:44px;font-weight:700;line-height:1.5}
+  #s4 .tip b{color:var(--peach)}
+
+  /* scene 5: 17.4 – 21 s  end card */
+  #s5{align-items:center;text-align:center}
+  .logo{width:200px;height:200px;border-radius:44px;box-shadow:0 20px 60px rgba(0,0,0,.5);animation:pop .7s var(--ease) both}
+  .end-h{margin-top:46px;font-size:78px;font-weight:900;line-height:1.25}
+  .tag{margin-top:22px;font-size:46px;font-weight:700;color:var(--peach)}
+  .cta{margin-top:60px;display:inline-block;padding:30px 76px;border-radius:999px;background:#fff;color:#111;font-size:60px;font-weight:900;animation:up .7s var(--ease) both, pulse 1.4s ease-in-out 19.2s infinite}
+  .disc{margin-top:40px;font-size:30px;color:var(--dim);line-height:1.6}
+</style>
+</head>
+<body>
+<div class="bg"><div class="grid"></div><div class="glowA"></div><div class="glowB"></div></div>
+
+<section class="scene" id="s1">
+  <div class="h in" style="animation-delay:.15s">今年</div>
+  <div class="h in" style="animation-delay:.4s"><span class="glow">1 万多</span>中国人</div>
+  <div class="h in" style="animation-delay:.65s"><span class="red">被拒入境</span>泰国</div>
+  <div class="sub in" style="animation-delay:1.4s">多数卡在这 3 点</div>
+</section>
+
+<section class="scene" id="s2">
+  <div class="badge in" style="animation-delay:3.5s"><span class="dot"></span>2026.1.1 – 11.14</div>
+  <div class="lab in" style="animation-delay:3.7s">中国公民被拒入境泰国</div>
+  <div class="num glow in" style="animation-delay:3.95s">12,880<small>人</small></div>
+  <div class="ratio in" style="animation-delay:4.7s">约占同期入境中国旅客 <b>0.26%</b></div>
+  <div class="note in" style="animation-delay:5.3s">同期入境约 487.9 万人次<br>数据来源：泰方公布，据媒体报道</div>
+</section>
+
+<section class="scene" id="s3">
+  <div class="h in" style="animation-delay:7.7s">入境前，<span class="glow">这 3 样</span><br>要能拿得出来</div>
+  <div class="cards">
+    <div class="card in" style="animation-delay:8.5s"><div class="n">1</div><div><div class="t">返程机票</div><div class="d">或离开泰国的行程</div></div></div>
+    <div class="card in" style="animation-delay:9.9s"><div class="n">2</div><div><div class="t">住宿证明</div><div class="d">酒店预订或在泰住址</div></div></div>
+    <div class="card in" style="animation-delay:11.3s"><div class="n">3</div><div><div class="t">资金证明</div><div class="d">能覆盖在泰期间的花费</div></div></div>
+  </div>
+</section>
+
+<section class="scene" id="s4">
+  <div class="neq in" style="animation-delay:14.1s">免签</div>
+  <div class="neq in" style="animation-delay:14.4s"><span class="x">≠</span> 无条件入境</div>
+  <div class="tip in" style="animation-delay:15.4s">电子入境卡 TDAC<br>请走<b>官方网站</b>填写，小心假网站</div>
+</section>
+
+<section class="scene" id="s5">
+  <img class="logo" src="logo.png" style="animation-delay:17.5s" alt="">
+  <div class="end-h in" style="animation-delay:17.85s">想在泰国长住？<br><span class="glow">先选对签证</span></div>
+  <div class="tag in" style="animation-delay:18.2s">曼谷注册 · 中文咨询</div>
+  <div class="cta" style="animation-delay:18.5s, 19.2s">有问题，私信我们</div>
+  <div class="disc in" style="animation-delay:18.8s">信息来源：泰方公布数据、中国驻泰使馆提醒<br>以官方最新规定为准</div>
+</section>
+<script>window.DURATION = 21;</script>
+</body>
+</html>
