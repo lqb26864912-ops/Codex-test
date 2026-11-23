@@ -1,0 +1,47 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
+<link rel="stylesheet" href="fonts/package/400.css"><link rel="stylesheet" href="fonts/package/700.css"><link rel="stylesheet" href="fonts/package/900.css">
+<style>
+:root{--peach:#ffc49b;--peach2:#ffe6cf;--red:#ff7a6b;--green:#7fd8a6}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:transparent;font-family:"Noto Sans SC",sans-serif;color:#fff}
+.glow{background:linear-gradient(180deg,#fff 0%,var(--peach2) 45%,var(--peach) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.tag{position:absolute;left:70px;top:110px;display:flex;align-items:center;gap:16px;padding:12px 24px 12px 12px;border-radius:999px;background:rgba(18,18,18,.72);border:1px solid rgba(255,255,255,.18)}
+.tag img{width:56px;height:56px;border-radius:14px}.tag b{font-size:30px;font-weight:900}.tag span{font-size:24px;color:var(--peach);font-weight:700}
+.panel{position:absolute;left:70px;width:830px;top:200px;height:370px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;opacity:0}
+.big{font-size:70px;font-weight:900;line-height:1.25;filter:drop-shadow(0 4px 14px rgba(0,0,0,.6))}
+.pill{display:inline-block;padding:8px 22px;border-radius:999px;background:rgba(30,30,30,.6);border:2px solid rgba(255,196,155,.8);color:var(--peach2);font-size:30px;font-weight:900;margin-bottom:16px}
+.news{width:830px;border-radius:26px;background:rgba(29,29,29,.94);border:1px solid rgba(255,255,255,.16);overflow:hidden}
+.news .top{display:flex;align-items:center;gap:14px;padding:16px 26px;background:rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.1)}
+.ntag{padding:4px 14px;border-radius:8px;background:var(--red);color:#fff;font-size:26px;font-weight:900}
+.news .src{font-size:28px;font-weight:700;color:rgba(255,255,255,.8)}.news .date{margin-left:auto;font-size:26px;color:rgba(255,255,255,.6)}
+.news .body{padding:22px 28px 26px}.news .hl{font-size:48px;font-weight:900}
+.news .q{margin-top:12px;padding-left:20px;border-left:6px solid var(--peach);font-size:34px;font-weight:700;line-height:1.5;color:rgba(255,255,255,.85)}
+.sub{position:absolute;left:70px;width:830px;top:1215px;text-align:center;font-size:50px;font-weight:900;line-height:1.35;opacity:0;
+  -webkit-text-stroke:8px rgba(0,0,0,.85);paint-order:stroke fill;filter:drop-shadow(0 3px 8px rgba(0,0,0,.7))}
+.chips{position:absolute;left:70px;width:830px;top:1330px;display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
+.chip{display:flex;align-items:center;gap:12px;padding:12px 24px;border-radius:18px;background:rgba(24,24,24,.86);border:1px solid rgba(255,255,255,.2);font-size:36px;font-weight:900;opacity:0}
+.chip i{font-style:normal;width:40px;height:40px;border-radius:10px;background:var(--green);color:#10291b;display:flex;align-items:center;justify-content:center;font-size:28px}
+.chip.r{border:2px solid var(--red)}.chip.r i{background:var(--red);color:#fff}
+.chip.c{background:#fff;color:#111;font-size:44px;padding:18px 44px;border-radius:999px}.chip.c i{display:none}
+</style></head><body>
+<div class="tag"><img src="logo.png"><div><b>方诺签证</b><br><span>曼谷注册 · 中文咨询</span></div></div>
+<div id="tops"></div><div id="subs"></div><div id="chipwrap"></div>
+<script>
+const D=__DATA__;window.DURATION=D.dur;const MS=D.dur*1000;
+const o=t=>Math.max(0,Math.min(1,t*1000/MS));
+function show(el,s,e,move,fadeIn){
+  const off=move?'translateY(30px)':'none';
+  const k=[{opacity:0,transform:off,offset:0},{opacity:0,transform:off,offset:o(s)},{opacity:1,transform:'none',offset:o(s+fadeIn)}];
+  if(e>=D.dur){k.push({opacity:1,transform:'none',offset:1});}
+  else{k.push({opacity:1,transform:'none',offset:Math.max(o(s+fadeIn),o(e-0.15))});k.push({opacity:0,transform:'none',offset:Math.max(o(s+fadeIn)+1e-5,o(e))});k.push({opacity:0,transform:'none',offset:1});}
+  for(let i=1;i<k.length;i++)if(k[i].offset<k[i-1].offset)k[i].offset=k[i-1].offset;
+  el.animate(k,{duration:MS,fill:'both'});
+}
+const tops=document.getElementById('tops');
+for(const [s,e,h] of D.top){const p=document.createElement('div');p.className='panel';p.innerHTML=h;tops.appendChild(p);show(p,s,e,true,0.35);}
+const subs=document.getElementById('subs');
+for(const [t,s,e] of D.subs){const p=document.createElement('div');p.className='sub';p.textContent=t;subs.appendChild(p);show(p,s,e,false,0.06);}
+const wrap=document.getElementById('chipwrap');const groups={};
+for(const [s,e,t,r] of D.chips){let g=groups[e];if(!g){g=document.createElement('div');g.className='chips';wrap.appendChild(g);groups[e]=g;}
+ const c=document.createElement('div');c.className='chip'+(r==1?' r':r==2?' c':'');c.innerHTML='<i>'+(r==1?'!':'✓')+'</i>'+t;g.appendChild(c);show(c,s,e,true,0.3);}
+</script></body></html>

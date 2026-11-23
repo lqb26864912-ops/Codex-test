@@ -1,0 +1,10 @@
+# 客户签证截图含个人信息，不放进公开仓库，只保留在服务器上
+site/assets/feedback/
+
+# 视频渲染的临时文件
+tools/video/fonts/
+tools/video/fonts-th/
+tools/video/frames-*/
+tools/video/prev-*.png
+tools/video/*.mp4
+tools/video/*.tgz

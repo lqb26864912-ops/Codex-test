@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<link rel="stylesheet" href="fonts/package/400.css">
+<link rel="stylesheet" href="fonts/package/700.css">
+<link rel="stylesheet" href="fonts/package/900.css">
+<style>
+  :root{--bg:#121212;--fg:#f5f5f5;--muted:rgba(255,255,255,.76);--dim:rgba(255,255,255,.58);--peach:#ffc49b;--peach2:#ffe6cf;--red:#ff7a6b;--green:#7fd8a6;--ease:cubic-bezier(.2,.7,.2,1)}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:1080px;height:1920px;overflow:hidden;background:var(--bg);color:var(--fg);font-family:"Noto Sans SC",sans-serif}
+  .bg{position:absolute;inset:0;overflow:hidden}
+  .grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:90px 90px;mask-image:radial-gradient(circle at 50% 45%,#000 0%,transparent 70%)}
+  .glowA{position:absolute;width:1100px;height:1100px;left:-300px;top:120px;border-radius:50%;background:radial-gradient(circle,rgba(255,157,92,.18),transparent 65%);animation:drift 36s linear both}
+  .glowB{position:absolute;width:900px;height:900px;right:-320px;top:900px;border-radius:50%;background:radial-gradient(circle,rgba(219,230,255,.10),transparent 65%);animation:drift2 36s linear both}
+  @keyframes drift{to{transform:translate(160px,120px)}}
+  @keyframes drift2{to{transform:translate(-140px,-160px)}}
+
+  /* content inside x 70–900 and y 220–1560 */
+  .scene{position:absolute;left:70px;width:830px;top:220px;height:1340px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center}
+  .glow{background:linear-gradient(180deg,#fff 0%,var(--peach2) 45%,var(--peach) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .in{animation:up .6s var(--ease) both}
+  @keyframes up{from{opacity:0;transform:translateY(42px)}to{opacity:1;transform:none}}
+  @keyframes out{from{opacity:1}to{opacity:0;transform:translateY(-36px)}}
+  @keyframes pop{0%{opacity:0;transform:scale(.6)}70%{opacity:1;transform:scale(1.15)}100%{opacity:1;transform:scale(1)}}
+  @keyframes pulse{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(255,196,155,.45)}50%{transform:scale(1.05);box-shadow:0 0 0 22px rgba(255,196,155,0)}}
+
+  .step{font-size:34px;font-weight:900;color:var(--peach);letter-spacing:2px;margin-bottom:22px}
+  .h2{font-size:76px;font-weight:900;line-height:1.2;margin-bottom:34px}
+
+  /* news card */
+  .news{width:830px;border-radius:32px;background:#1d1d1d;border:1px solid rgba(255,255,255,.14);overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.45)}
+  .news .top{display:flex;align-items:center;gap:16px;padding:22px 32px;background:rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.1)}
+  .news .tag{padding:6px 16px;border-radius:10px;background:var(--red);color:#fff;font-size:28px;font-weight:900}
+  .news .src{font-size:30px;font-weight:700;color:var(--muted)}
+  .news .date{margin-left:auto;font-size:28px;color:var(--dim);white-space:nowrap}
+  .news .body{padding:34px 36px 38px}
+  .news .hl{font-size:54px;font-weight:900;line-height:1.3}
+  .news .q{margin-top:22px;padding-left:24px;border-left:6px solid var(--peach);font-size:38px;font-weight:700;line-height:1.5;color:var(--muted)}
+  .take{margin-top:40px;font-size:48px;font-weight:900;line-height:1.4}
+  .take b{color:var(--peach)}
+
+  /* checklist */
+  .who{display:inline-flex;align-items:center;gap:14px;padding:12px 28px;border-radius:999px;background:rgba(255,196,155,.14);border:2px solid rgba(255,196,155,.6);font-size:36px;font-weight:900;color:var(--peach2);margin-bottom:28px}
+  .list{width:830px;display:flex;flex-direction:column;gap:22px}
+  .item{display:flex;gap:26px;align-items:flex-start;padding:28px 32px;border-radius:28px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.15)}
+  .box{flex:none;width:64px;height:64px;border-radius:16px;border:4px solid rgba(255,255,255,.35);position:relative;margin-top:4px}
+  .box i{position:absolute;inset:-4px;border-radius:16px;background:var(--green);display:flex;align-items:center;justify-content:center;color:#10291b;font-style:normal;font-size:44px;font-weight:900;animation:pop .45s var(--ease) both}
+  .item .t{font-size:50px;font-weight:900;line-height:1.25}
+  .item .d{margin-top:8px;font-size:34px;font-weight:700;color:var(--muted);line-height:1.45}
+  .item .d b{color:var(--peach)}
+  .src-line{margin-top:28px;font-size:28px;color:var(--dim);line-height:1.5}
+
+  #s1{animation:out .35s 3.45s both}
+  #s1 .h{font-size:96px;font-weight:900;line-height:1.22}
+  #s1 .sub{margin-top:50px;font-size:60px;font-weight:900;padding:16px 34px;border-radius:22px;background:#fff;color:#111}
+  #s2{animation:out .35s 9.25s both}
+  #s3{animation:out .35s 13.85s both}
+  #s4{animation:out .35s 19.45s both}
+  #s5{animation:out .35s 26.05s both}
+  #s6{animation:out .35s 30.25s both}
+  #s7{animation:out .35s 33.45s both}
+  .warn{width:830px;display:flex;flex-direction:column;gap:22px}
+  .warn div{padding:26px 32px;border-radius:26px;background:rgba(255,122,107,.1);border:2px solid rgba(255,122,107,.45);font-size:42px;font-weight:900;line-height:1.4}
+  .warn div span{display:block;font-size:32px;font-weight:700;color:var(--muted);margin-top:6px}
+
+  /* end card */
+  #s8{align-items:center;text-align:center}
+  .logo{width:180px;height:180px;border-radius:40px;box-shadow:0 20px 60px rgba(0,0,0,.5);animation:pop .7s var(--ease) both}
+  .end-h{margin-top:40px;font-size:72px;font-weight:900;line-height:1.25}
+  .end-tag{margin-top:20px;font-size:44px;font-weight:700;color:var(--peach)}
+  .cta{margin-top:50px;display:inline-block;padding:28px 70px;border-radius:999px;background:#fff;color:#111;font-size:58px;font-weight:900;animation:up .6s var(--ease) both, pulse 1.4s ease-in-out 34.6s infinite}
+  .disc{margin-top:36px;font-size:28px;color:var(--dim);line-height:1.6}
+</style>
+</head>
+<body>
+<div class="bg"><div class="grid"></div><div class="glowA"></div><div class="glowB"></div></div>
+
+<!-- 0 – 3.8 hook -->
+<section class="scene" id="s1">
+  <div class="h in" style="animation-delay:.1s">去泰国谈生意、</div>
+  <div class="h in" style="animation-delay:.35s">考察、开会，</div>
+  <div class="h in" style="animation-delay:.6s"><span class="glow">商务签</span></div>
+  <div class="h in" style="animation-delay:.85s">要准备哪些材料？</div>
+  <div class="sub in" style="animation-delay:1.4s">一条视频说清楚</div>
+</section>
+
+<!-- 3.8 – 9.6 why: news -->
+<section class="scene" id="s2">
+  <div class="step in" style="animation-delay:3.9s">先看官方提醒</div>
+  <div class="news in" style="animation-delay:4.05s">
+    <div class="top"><span class="tag">政策</span><span class="src">中国驻泰国大使馆</span><span class="date">2026-09-02</span></div>
+    <div class="body">
+      <div class="hl">中泰互免继续：单次停留不超过 30 天</div>
+      <div class="q">工作等活动，或计划停留超过 30 天，须在入境前办妥相应签证</div>
+    </div>
+  </div>
+  <div class="take in" style="animation-delay:6.6s">商务行程长、要多次往返，<br>就该<b>办商务签（Non-B）</b></div>
+</section>
+
+<!-- 9.6 – 14.2 basics -->
+<section class="scene" id="s3">
+  <div class="step in" style="animation-delay:9.7s">商务签是什么</div>
+  <div class="news in" style="animation-delay:9.85s">
+    <div class="top"><span class="tag">官方</span><span class="src">泰国外交部 · 签证说明</span></div>
+    <div class="body">
+      <div class="hl">Non-Immigrant B<br>商务 / 工作类非移民签证</div>
+      <div class="q">在线申请：泰国电子签证系统<br>thaievisa.go.th</div>
+    </div>
+  </div>
+  <div class="take in" style="animation-delay:11.6s">材料分 <b>3 部分</b>，逐项准备 👇</div>
+</section>
+
+<!-- 14.2 – 19.8 part 1 applicant -->
+<section class="scene" id="s4">
+  <div class="who in" style="animation-delay:14.3s">① 申请人本人</div>
+  <div class="list">
+    <div class="item in" style="animation-delay:14.6s"><div class="box"><i style="animation-delay:15.4s">✓</i></div><div><div class="t">护照</div><div class="d">有效期 <b>6 个月以上</b></div></div></div>
+    <div class="item in" style="animation-delay:15.6s"><div class="box"><i style="animation-delay:16.4s">✓</i></div><div><div class="t">身份证复印件</div></div></div>
+    <div class="item in" style="animation-delay:16.6s"><div class="box"><i style="animation-delay:17.4s">✓</i></div><div><div class="t">护照规格电子彩照</div><div class="d">按电子签证系统要求上传</div></div></div>
+  </div>
+</section>
+
+<!-- 19.8 – 26.4 part 2 Thai inviter -->
+<section class="scene" id="s5">
+  <div class="who in" style="animation-delay:19.9s">② 泰国邀请公司</div>
+  <div class="list">
+    <div class="item in" style="animation-delay:20.2s"><div class="box"><i style="animation-delay:21.6s">✓</i></div><div><div class="t">邀请函（最关键）</div><div class="d">泰文或英文 · 公司信纸打印<br>写明身份、职位、访问目的、往返时间<br>盖章 + 授权人签字 · <b>手写无效</b></div></div></div>
+    <div class="item in" style="animation-delay:22.4s"><div class="box"><i style="animation-delay:23.2s">✓</i></div><div><div class="t">营业执照、股东名单</div><div class="d">复印件</div></div></div>
+    <div class="item in" style="animation-delay:23.6s"><div class="box"><i style="animation-delay:24.4s">✓</i></div><div><div class="t">税务相关单据</div></div></div>
+  </div>
+</section>
+
+<!-- 26.4 – 30.6 part 3 home employer -->
+<section class="scene" id="s6">
+  <div class="who in" style="animation-delay:26.5s">③ 国内任职公司</div>
+  <div class="list">
+    <div class="item in" style="animation-delay:26.8s"><div class="box"><i style="animation-delay:27.6s">✓</i></div><div><div class="t">英文在职证明</div><div class="d">中文的需附翻译</div></div></div>
+    <div class="item in" style="animation-delay:28.0s"><div class="box"><i style="animation-delay:28.8s">✓</i></div><div><div class="t">营业执照复印件</div></div></div>
+  </div>
+  <div class="src-line in" style="animation-delay:28.6s">清单参考：泰国外交部、泰国驻外使领馆公布的要求</div>
+</section>
+
+<!-- 30.6 – 33.8 warnings -->
+<section class="scene" id="s7">
+  <div class="h2 in" style="animation-delay:30.7s">还要注意 <span class="glow">2 点</span></div>
+  <div class="warn">
+    <div class="in" style="animation-delay:31.0s">商务签 ≠ 工作许可<span>在泰国工作，另须办理工作许可</span></div>
+    <div class="in" style="animation-delay:31.6s">各使领馆要求不完全一样<span>可能要求补充材料，以最新公布为准</span></div>
+  </div>
+</section>
+
+<!-- 33.8 – 37 end -->
+<section class="scene" id="s8">
+  <img class="logo" src="logo.png" style="animation-delay:33.9s" alt="">
+  <div class="end-h in" style="animation-delay:34.15s">材料多、怕出错？<br><span class="glow">先帮你逐项核对</span></div>
+  <div class="end-tag in" style="animation-delay:34.4s">曼谷注册 · 中文咨询</div>
+  <div class="cta" style="animation-delay:34.6s, 35.2s">有问题，私信我们</div>
+  <div class="disc in" style="animation-delay:34.9s">来源：泰国外交部、泰国驻外使领馆、中国驻泰国大使馆<br>以使领馆最新要求为准 · 不保证获批</div>
+</section>
+<script>window.DURATION = 37;</script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+# 短视频模板（15 秒 Reels）
+
+现有：`elite.html`（精英签）、`retire.html`（养老签两条通道）、`tm47chat.html`（90 天报到漏报，聊天气泡情景对话，22 秒）。
+
+页面可以用 `window.DURATION` 设定时长；需要按实际排版计算动画的（比如聊天自动滚动），在 `window.build()` 里创建，渲染脚本会在字体加载完以后调用它。
+
+用 HTML 动画逐帧截图，再用 ffmpeg 合成 MP4。竖版 1080×1920，30 帧，15 秒。
+
+## 重新生成
+
+```bash
+cd tools/video
+npm pack @fontsource/noto-sans-sc@5.1.1 && tar -xzf fontsource-noto-sans-sc-*.tgz && mv package fonts/ 2>/dev/null || (mkdir -p fonts && mv package fonts/)
+node render.js preview elite.html          # 先看 4 个关键画面（prev-elite-*.png）
+node render.js full elite.html             # 输出 450 帧到 frames-elite/
+ffmpeg -y -framerate 30 -i frames-elite/%04d.png -f lavfi -i anullsrc=channel_layout=stereo:sample_rate=44100 \
+  -shortest -c:v libx264 -profile:v high -pix_fmt yuv420p -crf 18 -preset slow -r 30 \
+  -c:a aac -b:a 128k -movflags +faststart 精英签_Reels_15秒.mp4
+```
+
+## 改内容
+
+文字都在 `elite.html` 里。每个元素的出现时间是 `animation-delay`，每个场景的淡出时间在 `#s1`–`#s3` 的 `out` 动画上。
+
+## ⚠️ 需要按时更新
+
+- "官方会员费 65 万泰铢起"：Bronze 套餐官方开放申请至 2026-12-31。过了这个日期，要按官方最新公布改价格，重新生成视频
+
+- 养老签视频里的价格（54,000 / 60,000）、"通常 3–5 天""本人到场约 2 次""约 1 天出签""含协助开银行账户和 1 年延期"，都来自网站。价格或做法变了，要同步修改并重新生成
+
+## 做新视频
+
+复制一个现有的 .html，改 4 个场景（`#s1`–`#s4`）里的文字和 `animation-delay`，然后：
+
+```bash
+node render.js preview 新文件.html 2,6,10,14   # 第三个参数是要预览的时间点（秒）
+node render.js full 新文件.html
+```
+
+## 聊天气泡模板（tm47chat.html）
+
+- 对话内容在页面底部的 `MSGS` 里：`s` 是说话的人（`c` 客户、`a` 顾问），`t` 是出现的秒数
+- 顾问回复前会自动显示约 0.9 秒的"正在输入"
+- 内容排在屏幕 x 70–900 之间，避开抖音右侧按钮和底部文字区
+- 顶部固定显示"情景演示"，不要去掉：编写的对话不能做成像真实聊天记录的样子

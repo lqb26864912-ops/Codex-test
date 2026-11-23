@@ -1,0 +1,28 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
+<link rel="stylesheet" href="fonts/package/700.css"><link rel="stylesheet" href="fonts/package/900.css">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:transparent;font-family:"Noto Sans SC",sans-serif;color:#fff}
+.shade{position:absolute;left:0;right:0}
+.shade.t{top:0;height:620px;background:linear-gradient(180deg,rgba(0,0,0,.55),rgba(0,0,0,0))}
+.shade.b{top:1150px;height:770px;background:linear-gradient(0deg,rgba(0,0,0,.6),rgba(0,0,0,0))}
+.tag{position:absolute;left:70px;top:110px;display:flex;align-items:center;gap:16px;padding:12px 24px 12px 12px;border-radius:999px;background:rgba(18,18,18,.6);border:1px solid rgba(255,255,255,.2)}
+.tag img{width:56px;height:56px;border-radius:14px}.tag b{font-size:30px;font-weight:900}.tag span{font-size:24px;color:#ffc49b;font-weight:700}
+.lab{position:absolute;left:70px;top:230px;opacity:0}
+.lab .k{display:inline-block;padding:10px 26px;border-radius:999px;background:#ffc49b;color:#1b1208;font-size:36px;font-weight:900}
+.lab .h{margin-top:18px;font-size:80px;font-weight:900;line-height:1.2;filter:drop-shadow(0 4px 14px rgba(0,0,0,.6))}
+.sub{position:absolute;left:70px;width:830px;top:1330px;text-align:center;font-size:52px;font-weight:900;line-height:1.4;opacity:0;-webkit-text-stroke:8px rgba(0,0,0,.8);paint-order:stroke fill;white-space:pre-line;filter:drop-shadow(0 3px 8px rgba(0,0,0,.6))}
+</style></head><body>
+<div class="shade t"></div><div class="shade b"></div>
+<div class="tag"><img src="logo.png"><div><b>方诺签证</b><br><span>曼谷生活 · 探访</span></div></div>
+<div id="labs"></div><div id="subs"></div>
+<script>
+const DUR=34.3; window.DURATION=DUR; const MS=DUR*1000; const o=t=>Math.max(0,Math.min(1,t*1000/MS));
+function show(el,s,e,move){const off=move?'translateY(24px)':'none';
+ const k=[{opacity:0,transform:off,offset:0},{opacity:0,transform:off,offset:o(s)},{opacity:1,transform:'none',offset:o(s+0.35)},{opacity:1,transform:'none',offset:Math.max(o(s+0.35),o(e-0.2))},{opacity:0,transform:'none',offset:Math.max(o(s+0.35)+1e-5,o(e))},{opacity:0,transform:'none',offset:1}];
+ for(let i=1;i<k.length;i++)if(k[i].offset<k[i-1].offset)k[i].offset=k[i-1].offset; el.animate(k,{duration:MS,fill:'both'});}
+const LABS=[[0,3.0,'探访','曼谷<br>高层公寓'],[3.0,12.77,'客厅','整面落地窗'],[12.77,19.77,'视野','城市天际线'],[19.77,28.27,'窗外','楼下一片绿'],[28.27,31.97,'阳台','玻璃围栏'],[31.97,34.3,'浴室','窗边泡澡']];
+const SUBS=[[0.3,3.0,'在曼谷长住\n住这样的房子是什么感觉？'],[3.1,6.97,'一进门，先看到整面落地窗'],[7.0,12.77,'客厅和餐厅连在一起，空间很开阔'],[12.8,19.77,'窗外就是曼谷的城市天际线'],[19.8,28.27,'往下看，是一大片绿地'],[28.3,31.97,'阳台是玻璃围栏，视野不挡'],[32.0,34.3,'浴室也有窗，泡澡就能看到城市']];
+const labs=document.getElementById('labs');for(const [s,e,k,h] of LABS){const d=document.createElement('div');d.className='lab';d.innerHTML='<div class="k">'+k+'</div><div class="h">'+h+'</div>';labs.appendChild(d);show(d,s,e,true);}
+const subs=document.getElementById('subs');for(const [s,e,t] of SUBS){const d=document.createElement('div');d.className='sub';d.textContent=t;subs.appendChild(d);show(d,s,e,false);}
+</script></body></html>

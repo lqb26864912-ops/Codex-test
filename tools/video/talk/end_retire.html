@@ -1,0 +1,27 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
+<link rel="stylesheet" href="fonts/package/400.css"><link rel="stylesheet" href="fonts/package/700.css"><link rel="stylesheet" href="fonts/package/900.css">
+<style>
+:root{--peach:#ffc49b;--peach2:#ffe6cf;--ease:cubic-bezier(.2,.7,.2,1)}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#121212;color:#fff;font-family:"Noto Sans SC",sans-serif}
+.grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);background-size:90px 90px;mask-image:radial-gradient(circle at 50% 45%,#000 0%,transparent 70%)}
+.g{position:absolute;width:1100px;height:1100px;left:-300px;top:300px;border-radius:50%;background:radial-gradient(circle,rgba(255,157,92,.18),transparent 65%)}
+.s{position:absolute;left:70px;width:830px;top:220px;height:1340px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.glow{background:linear-gradient(180deg,#fff 0%,var(--peach2) 45%,var(--peach) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+@keyframes up{from{opacity:0;transform:translateY(42px)}to{opacity:1;transform:none}}
+@keyframes pop{0%{opacity:0;transform:scale(.7)}70%{opacity:1;transform:scale(1.06)}100%{opacity:1;transform:scale(1)}}
+@keyframes pulse{0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(255,196,155,.45)}50%{transform:scale(1.05);box-shadow:0 0 0 22px rgba(255,196,155,0)}}
+.in{animation:up .5s var(--ease) both}
+.logo{width:180px;height:180px;border-radius:40px;animation:pop .6s var(--ease) both}
+.h{margin-top:40px;font-size:72px;font-weight:900;line-height:1.25}
+.t{margin-top:20px;font-size:44px;font-weight:700;color:var(--peach)}
+.cta{margin-top:50px;padding:28px 70px;border-radius:999px;background:#fff;color:#111;font-size:58px;font-weight:900;animation:up .5s var(--ease) .6s both,pulse 1.4s ease-in-out 1.2s infinite}
+.d{margin-top:36px;font-size:30px;color:rgba(255,255,255,.58);line-height:1.6}
+</style></head><body><div class="grid"></div><div class="g"></div>
+<div class="s">
+<img class="logo" src="logo.png" alt="">
+<div class="h in" style="animation-delay:.2s">在泰国养老，<br><span class="glow">先把签证安排好</span></div>
+<div class="t in" style="animation-delay:.4s">曼谷注册 · 中文咨询</div>
+<div class="cta">有问题，私信我们</div>
+<div class="d in" style="animation-delay:.8s">条件以泰国移民局最新要求为准<br>审批结果由主管机构决定，不保证获批</div>
+</div><script>window.DURATION=3;</script></body></html>

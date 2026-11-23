@@ -1,0 +1,48 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8">
+<link rel="stylesheet" href="fonts/package/400.css"><link rel="stylesheet" href="fonts/package/700.css"><link rel="stylesheet" href="fonts/package/900.css">
+<style>
+:root{--peach:#ffc49b;--peach2:#ffe6cf;--red:#ff7a6b;--green:#7fd8a6}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{width:1080px;height:1920px;overflow:hidden;background:transparent;font-family:"Noto Sans SC",sans-serif;color:#fff}
+.glow{background:linear-gradient(180deg,#fff 0%,var(--peach2) 45%,var(--peach) 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.tag{position:absolute;left:70px;top:110px;display:flex;align-items:center;gap:16px;padding:12px 24px 12px 12px;border-radius:999px;background:rgba(18,18,18,.72);border:1px solid rgba(255,255,255,.18)}
+.tag img{width:56px;height:56px;border-radius:14px}.tag b{font-size:30px;font-weight:900}.tag span{font-size:24px;color:var(--peach);font-weight:700}
+.shade{position:absolute;left:0;right:0}.shade.t{top:0;height:640px;background:linear-gradient(180deg,rgba(0,0,0,.62),rgba(0,0,0,0))}.shade.b{top:1200px;height:720px;background:linear-gradient(0deg,rgba(0,0,0,.66),rgba(0,0,0,0))}
+.panel{position:absolute;left:70px;width:830px;top:190px;height:340px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;opacity:0}
+.big{font-size:70px;font-weight:900;line-height:1.25;filter:drop-shadow(0 4px 14px rgba(0,0,0,.6))}
+.pill{display:inline-block;padding:8px 22px;border-radius:999px;background:rgba(30,30,30,.6);border:2px solid rgba(255,196,155,.8);color:var(--peach2);font-size:30px;font-weight:900;margin-bottom:16px}
+.news{width:830px;border-radius:26px;background:rgba(29,29,29,.94);border:1px solid rgba(255,255,255,.16);overflow:hidden}
+.news .top{display:flex;align-items:center;gap:14px;padding:16px 26px;background:rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.1)}
+.ntag{padding:4px 14px;border-radius:8px;background:var(--red);color:#fff;font-size:26px;font-weight:900}
+.news .src{font-size:28px;font-weight:700;color:rgba(255,255,255,.8)}.news .date{margin-left:auto;font-size:26px;color:rgba(255,255,255,.6)}
+.news .body{padding:22px 28px 26px}.news .hl{font-size:48px;font-weight:900}
+.news .q{margin-top:12px;padding-left:20px;border-left:6px solid var(--peach);font-size:34px;font-weight:700;line-height:1.5;color:rgba(255,255,255,.85)}
+.sub{position:absolute;left:70px;width:830px;top:1380px;text-align:center;font-size:50px;font-weight:900;line-height:1.35;opacity:0;
+  -webkit-text-stroke:8px rgba(0,0,0,.85);paint-order:stroke fill;filter:drop-shadow(0 3px 8px rgba(0,0,0,.7))}
+.chips{position:absolute;left:70px;width:830px;top:1490px;display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
+.chip{display:flex;align-items:center;gap:12px;padding:12px 24px;border-radius:18px;background:rgba(24,24,24,.86);border:1px solid rgba(255,255,255,.2);font-size:36px;font-weight:900;opacity:0}
+.chip i{font-style:normal;width:40px;height:40px;border-radius:10px;background:var(--green);color:#10291b;display:flex;align-items:center;justify-content:center;font-size:28px}
+.chip.r{border:2px solid var(--red)}.chip.r i{background:var(--red);color:#fff}
+.chip.c{background:#fff;color:#111;font-size:44px;padding:18px 44px;border-radius:999px}.chip.c i{display:none}
+</style></head><body>
+<div class="shade t"></div><div class="shade b"></div><div class="tag"><img src="logo.png"><div><b>方诺签证</b><br><span>曼谷注册 · 中文咨询</span></div></div>
+<div id="tops"></div><div id="subs"></div><div id="chipwrap"></div>
+<script>
+const D={"dur": 46.4, "subs": [["想在泰国养老", 0.0, 1.072689075630252], ["养老签有三条路", 1.072689075630252, 2.324159663865546], ["我一分钟给你讲清楚", 2.324159663865546, 4.445], ["先说条件：年满五十岁就可以申请", 4.445, 7.515000000000001], ["第一条路，存款", 7.515000000000001, 8.408823529411764], ["在泰国银行账户里，存够八十万泰铢", 8.408823529411764, 11.410546218487394], ["第二条路，收入", 11.410546218487394, 12.483235294117645], ["每个月有六万五千泰铢以上的收入", 12.483235294117645, 15.164957983193275], ["要能开出收入证明", 15.164957983193275, 16.305], ["第三条路，存款加收入", 16.305, 18.47424369747899], ["两样加起来", 18.47424369747899, 19.3681512605042], ["一年合计达到八十万泰铢", 19.3681512605042, 21.685000000000002], ["养老签一次办一年", 21.685000000000002, 23.08], ["之后每年在泰国续签", 23.08, 24.964033613445373], ["住满九十天，还要做九十天报到", 24.964033613445373, 27.288193277310924], ["提醒一句，养老签不能在泰国工作", 27.288193277310924, 30.64], ["还有，资金证明一定要是真实的", 30.64, 33.405], ["有人说可以帮你借钱存进去、开证明", 33.405, 35.70701680672269], ["被查出来，签证可能被拒，甚至取消", 35.70701680672269, 38.375], ["以后再办也会受影响", 38.375, 40.39899159663866], ["你更适合哪一条路？", 40.39899159663866, 41.829243697479], ["不确定的话，可以私信我", 41.829243697479, 43.1], ["我们公司在曼谷，帮你一对一看看", 43.1, 46.4]], "top": [[0, 4.445, "<div class=\"big\">泰国养老签<br><span class=\"glow\">三条路</span></div>"], [4.445, 7.515000000000001, "<div class=\"pill\">条件</div><div class=\"big\">年满 <span class=\"glow\">50 岁</span></div>"], [7.515000000000001, 11.410546218487394, "<div class=\"pill\">第一条路</div><div class=\"big\"><span class=\"glow\">存款</span></div>"], [11.410546218487394, 16.305, "<div class=\"pill\">第二条路</div><div class=\"big\"><span class=\"glow\">收入</span></div>"], [16.305, 21.685000000000002, "<div class=\"pill\">第三条路</div><div class=\"big\"><span class=\"glow\">存款 + 收入</span></div>"], [21.685000000000002, 27.288193277310924, "<div class=\"big\">一年一续<br><span class=\"glow\">90 天报到</span></div>"], [27.288193277310924, 30.64, "<div class=\"pill\">提醒</div><div class=\"big\">不能在泰国<span class=\"glow\">工作</span></div>"], [30.64, 40.39899159663866, "<div class=\"pill\">提醒</div><div class=\"big\">资金证明<br><span class=\"glow\">一定要真实</span></div>"], [40.39899159663866, 46.4, "<div class=\"big\">你适合哪一条？<br><span class=\"glow\">私信帮你看</span></div>"]], "chips": [[8.408823529411764, 21.685000000000002, "存款 80 万泰铢", 0], [12.483235294117645, 21.685000000000002, "月收入 6.5 万泰铢", 0], [19.3681512605042, 21.685000000000002, "存款 + 收入，一年合计 80 万", 0], [27.288193277310924, 30.64, "养老签 ≠ 工作许可", 1], [33.405, 40.39899159663866, "借钱存款、假证明 → 可能被拒或取消", 1], [41.829243697479, 46.4, "有问题，私信我们", 2]]};window.DURATION=D.dur;const MS=D.dur*1000;
+const o=t=>Math.max(0,Math.min(1,t*1000/MS));
+function show(el,s,e,move,fadeIn){
+  const off=move?'translateY(30px)':'none';
+  const k=[{opacity:0,transform:off,offset:0},{opacity:0,transform:off,offset:o(s)},{opacity:1,transform:'none',offset:o(s+fadeIn)}];
+  if(e>=D.dur){k.push({opacity:1,transform:'none',offset:1});}
+  else{k.push({opacity:1,transform:'none',offset:Math.max(o(s+fadeIn),o(e-0.15))});k.push({opacity:0,transform:'none',offset:Math.max(o(s+fadeIn)+1e-5,o(e))});k.push({opacity:0,transform:'none',offset:1});}
+  for(let i=1;i<k.length;i++)if(k[i].offset<k[i-1].offset)k[i].offset=k[i-1].offset;
+  el.animate(k,{duration:MS,fill:'both'});
+}
+const tops=document.getElementById('tops');
+for(const [s,e,h] of D.top){const p=document.createElement('div');p.className='panel';p.innerHTML=h;tops.appendChild(p);show(p,s,e,true,0.35);}
+const subs=document.getElementById('subs');
+for(const [t,s,e] of D.subs){const p=document.createElement('div');p.className='sub';p.textContent=t;subs.appendChild(p);show(p,s,e,false,0.06);}
+const wrap=document.getElementById('chipwrap');const groups={};
+for(const [s,e,t,r] of D.chips){let g=groups[e];if(!g){g=document.createElement('div');g.className='chips';wrap.appendChild(g);groups[e]=g;}
+ const c=document.createElement('div');c.className='chip'+(r==1?' r':r==2?' c':'');c.innerHTML='<i>'+(r==1?'!':'✓')+'</i>'+t;g.appendChild(c);show(c,s,e,true,0.3);}
+</script></body></html>
